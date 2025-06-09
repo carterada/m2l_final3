@@ -1,0 +1,20 @@
+<nav id="navbar" style="padding: 1rem; background-color: #f5f5f5; display: flex; gap: 1rem; align-items: center;">
+<!-- Toujours visible -->
+<a href="/" style="text-decoration: none;">Accueil</a>
+<a href="/salles" style="text-decoration: none;">Salles</a>
+ 
+  <!-- Visible uniquement si l'utilisateur n'est PAS connecté -->
+<a href="/login" class="guest" style="text-decoration: none;">Connexion</a>
+<a href="/signup" class="guest" style="text-decoration: none;">Inscription</a>
+ 
+  <!-- Visible uniquement si l'utilisateur EST connecté (mais pas admin) -->
+<a href="/reservation" class="auth not-admin" style="text-decoration: none;">Réservation</a>
+ 
+  <!-- Visible uniquement pour ADMIN -->
+<a href="/admin/reservations" class="admin-only" style="text-decoration: none;">Réservations</a>
+<a href="/admin/comptes" class="admin-only" style="text-decoration: none;">Comptes</a>
+ 
+  <!-- Visible pour tous les connectés (admin ou non) -->
+<a href="/profil" class="auth" style="text-decoration: none;">Profil</a>
+<button id="logoutBtn" class="auth" style="padding: 0.3rem 0.7rem; cursor: pointer;">Déconnexion</button>
+</nav>

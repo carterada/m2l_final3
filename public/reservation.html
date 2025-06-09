@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+    <h1>Réservation de salle</h1>
+
+        <div id="navbarContainer"></div>
+    <br>
+     
+  <form id="reservationForm">
+<label for="room_id">Choisissez une salle :</label>
+<select id="room_id" required>
+<option value="">-- Sélectionner une salle --</option>
+<option value="1">Salle de musculation</option>
+<option value="2">Salle de cardio-training</option>
+<option value="3">Studio de yoga</option>
+<option value="4">Dojo</option>
+<option value="5">Salle de danse</option>
+<option value="6">Salle de cross-training</option>
+<option value="7">Salle d'escalade</option>
+<option value="8">Salle de spinning</option>
+<option value="9">Salle d'aquagym</option>
+<option value="10">Salle polyvalente</option>
+</select>
+ 
+    <label for="date">Date :</label>
+<input type="date" id="date" required>
+ 
+    <label for="start">Heure de début :</label>
+<input type="time" id="start" required>
+ 
+    <label for="end">Heure de fin :</label>
+<input type="time" id="end" required>
+ 
+    <button type="submit">Réserver</button>
+</form>
+ 
+  <div id="messageBox" class="messageBox"></div>
+ 
+  <script src="/js/navbar.js"></script>
+<script src="/js/logout.js"></script>
+<script type="module" src="/js/reservations.js"></script>
+<script src="js/authGuard.js"></script>
+</body>
+</html>

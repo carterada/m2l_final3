@@ -1,0 +1,97 @@
+/* Import de la police Poppins via Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+ 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+ 
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #F4F4F4;
+  color: #1B825B;
+  padding: 20px;
+}
+ 
+/* === Navbar === */
+nav {
+  background-color: #0FAC71;
+  padding: 15px;
+  margin-bottom: 30px;
+  border-radius: 8px;
+}
+ 
+nav a {
+  color: black;
+  margin: 0 15px;
+  text-decoration: none;
+  font-weight: 600;
+}
+ 
+nav a:hover {
+  text-decoration: underline;
+}
+ 
+/* === Titres === */
+h1, h2 {
+  color: #0FAC71;
+  margin-bottom: 15px;
+}
+ 
+/* === Formulaires === */
+form {
+  background-color: white;
+  padding: 25px;
+  border-radius: 10px;
+  max-width: 600px;
+  margin: auto;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+ 
+label {
+  display: block;
+  margin-top: 15px;
+  color: #1B825B;
+  font-weight: 500;
+}
+ 
+input, select, button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+ 
+/* === Bouton principal === */
+button {
+  background-color: #0FAC71;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+ 
+button:hover {
+  background-color: #1B825B;
+}
+ 
+/* === Messages === */
+.messageBox {
+  max-width: 600px;
+  margin: 10px auto;
+  text-align: center;
+  font-weight: bold;
+}
+ 
+.message.success {
+  color: #0FAC71;
+}
+ 
+.message.error {
+  color: #F89191;
+}
+
