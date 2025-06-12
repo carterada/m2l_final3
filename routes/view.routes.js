@@ -31,5 +31,15 @@ router.get('/reservation', (req, res) => {
 router.get('/profil', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/profile.html'));
 });
+
+// Page d'administration des réservations
+router.get('/admin/reservations', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/adminReservations.html'));
+});
+
+// Page administration des utilisateurs
+router.get('/admin/utilisateurs', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/adminUsers.html'));
+});
  
 module.exports = router;

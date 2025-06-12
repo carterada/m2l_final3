@@ -51,8 +51,12 @@ exports.login = (req, res) => {
     }
  
     const user = results[0];
- 
-    bcrypt.compare(password, user.password, (err, match) => {
+
+if (!user.active) {
+  return res.status(403).json({ error: 'Compte désactivé. Veuillez contacter un administrateur.' });
+}
+
+bcrypt.compare(password, user.password, (err, match) => {
       if (err || !match) {
         return res.status(401).json({ error: 'Email ou mot de passe incorrect.' });
       }

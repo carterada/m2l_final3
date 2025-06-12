@@ -7,7 +7,7 @@ require('dotenv').config();
 const authRoutes = require('./routes/auth.routes');
 const viewRoutes = require('./routes/view.routes');
 const reservationRoutes = require('./routes/reservation.routes');
-
+const adminRoutes = require('./routes/admin');
 
 
 const db = require('./db/config');
@@ -28,6 +28,7 @@ app.use('/partials', express.static(path.join(__dirname, 'public/partials')));
 // routes
 app.use('/', viewRoutes);
 app.use('/reservation', reservationRoutes);
+app.use('/admin', adminRoutes);
 
 
 //lancement server
