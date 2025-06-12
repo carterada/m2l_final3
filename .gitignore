@@ -1,0 +1,15 @@
+# Node.js
+node_modules/
+
+# Fichier de config sensible
+.env
+
+# Fichiers système / éditeurs
+.DS_Store
+.vscode/
+.idea/
+*.log
+
+# Divers (optionnel)
+*.zip
+medias/
