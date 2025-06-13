@@ -28,7 +28,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         li.textContent = `${resa.name} (${resa.type}) — ${formatDateTime(resa.start_time)} ➡ ${formatDateTime(resa.end_time)}`;
 
-        // Applique les classes CSS
         if (isCancelled) {
           li.classList.add('resa-cancelled');
           const annote = document.createElement('span');
@@ -41,10 +40,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         } else {
           li.classList.add('resa-active');
 
-          // Bouton d'annulation
           const btn = document.createElement('button');
           btn.textContent = "Annuler";
           btn.style.marginLeft = '12px';
+
           btn.addEventListener('click', async () => {
             if (confirm("Annuler cette réservation ?")) {
               try {
@@ -54,17 +53,18 @@ document.addEventListener("DOMContentLoaded", async () => {
                 });
                 const result = await del.json();
                 if (del.ok) {
-                  alert(result.message || "Réservation annulée !");
-                  location.reload();
+                  showNotification(result.message || "Réservation annulée !");
+                  setTimeout(() => location.reload(), 1500);
                 } else {
-                  alert(result.error || "Erreur lors de l'annulation.");
+                  showNotification(result.error || "Erreur lors de l'annulation.", "error");
                 }
               } catch (err) {
                 console.error("Erreur d'annulation :", err);
-                alert("Erreur de communication avec le serveur.");
+                showNotification("Erreur de communication avec le serveur.", "error");
               }
             }
           });
+
           li.appendChild(btn);
         }
 
@@ -82,4 +82,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 function formatDateTime(dateTime) {
   const date = new Date(dateTime);
   return date.toLocaleString("fr-FR", { dateStyle: "short", timeStyle: "short" });
+}
+
+// ✅ Notification visuelle
+function showNotification(message, type = 'success') {
+  const container = document.getElementById('notification-container');
+  if (!container) return;
+  const notif = document.createElement('div');
+  notif.className = `notification ${type === 'error' ? 'error' : ''}`;
+  notif.textContent = message;
+  container.appendChild(notif);
+  setTimeout(() => notif.remove(), 5000);
 }

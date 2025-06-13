@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const db = require ('../db/config');
+const { logAction } = require('../utils/logs');
 
 exports.signup = (req, res) => {
     const { email, password } = req.body || {};
@@ -71,6 +72,9 @@ bcrypt.compare(password, user.password, (err, match) => {
         process.env.JWT_SECRET,
         { expiresIn: process.env.JWT_EXPIRES_IN || '3h' }
       );
+
+      // Log de l'action de connexion
+      logAction(user.id, 'connexion', `Connexion réussie pour l'utilisateur ${user.email}`);
  
       // Enregistrement du token dans un cookie httpOnly
       res.cookie('token', token, {

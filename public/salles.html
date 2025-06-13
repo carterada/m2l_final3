@@ -7,9 +7,57 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Nos Salles</h1>
-      <div id="navbarContainer"></div>
-         <p>Les salles de sport a disposition.</p>
+      <!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nos Salles - M2L Réservation</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div id="navbarContainer"></div>
+
+  <main class="salles-page">
+    <h1>Découvrez nos salles disponibles</h1>
+    <p>Choisissez un espace adapté à vos besoins sportifs et réservez-le en un clic.</p>
+    <div class="cards-container">
+      <div class="salle-card">
+        <img src="https://static.pexels.com/photos/3601457/pexels-photo-3601457.jpeg" alt="Salle de football">
+        <h2>Football Indoor</h2>
+        <p>Terrain synthétique intérieur pour matchs et entraînements.</p>
+      </div>
+      <div class="salle-card">
+        <img src="https://static.pexels.com/photos/3601493/pexels-photo-3601493.jpeg" alt="Salle de basketball">
+        <h2>Basketball</h2>
+        <p>Terrain réglementaire avec paniers ajustables et gradins.</p>
+      </div>
+      <div class="salle-card">
+        <img src="https://static.pexels.com/photos/3601523/pexels-photo-3601523.jpeg" alt="Salle de yoga">
+        <h2>Yoga</h2>
+        <p>Espace calme et lumineux pour yoga et méditation.</p>
+      </div>
+      <div class="salle-card">
+        <img src="https://static.pexels.com/photos/3601536/pexels-photo-3601536.jpeg" alt="Salle de musculation">
+        <h2>Musculation</h2>
+        <p>Appareils modernes, poids libres et bancs.</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <div id="footerContainer"></div>
+
+  <script src="/js/navbar.js"></script>
+  <script>
+    fetch("/partials/footer.html")
+      .then(res => res.text())
+      .then(html => document.getElementById("footerContainer").innerHTML = html);
+  </script>
+</body>
+</html>
 
   <div id="rooms"></div>
  

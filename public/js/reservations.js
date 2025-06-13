@@ -1,47 +1,43 @@
 import { requireAuth } from './authGuard.js';
- 
+
 document.addEventListener("DOMContentLoaded", async () => {
-  const user = await requireAuth(); // Redirige si non connecté
+  const user = await requireAuth();
   if (!user) return;
 
-  if( user.role === 'admin') {
-    alert("Accès refusé : réservée aux utilisateurs.");
-    window.location.href = '/';
+  if (user.role === 'admin') {
+    showNotification("Accès refusé : réservée aux utilisateurs.", "error");
+    setTimeout(() => window.location.href = '/', 2000);
     return;
   }
- 
+
   const form = document.getElementById('reservationForm');
-  const messageBox = document.getElementById('messageBox');
- 
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
- 
+
     const room_id = document.getElementById('room_id').value;
     const date = document.getElementById('date').value;
     const start = document.getElementById('start').value;
     const end = document.getElementById('end').value;
- 
+
     const start_time = `${date} ${start}`;
     const end_time = `${date} ${end}`;
- 
-    // Vérification durée
+
     const startDate = new Date(`${date}T${start}`);
     const endDate = new Date(`${date}T${end}`);
     const durationMs = endDate - startDate;
-    const maxDurationMs = 3 * 60 * 60 * 1000; // 3h
- 
+    const maxDurationMs = 3 * 60 * 60 * 1000;
+
     if (durationMs <= 0) {
-      messageBox.textContent = "L'heure de fin doit être après l'heure de début.";
-      messageBox.className = "message error";
+      showNotification("L'heure de fin doit être après l'heure de début.", "error");
       return;
     }
- 
+
     if (durationMs > maxDurationMs) {
-      messageBox.textContent = "Durée max : 3 heures.";
-      messageBox.className = "message error";
+      showNotification("Durée max : 3 heures.", "error");
       return;
     }
- 
+
     try {
       const res = await fetch('/reservation', {
         method: 'POST',
@@ -53,22 +49,30 @@ document.addEventListener("DOMContentLoaded", async () => {
           end_time
         })
       });
- 
+
       const result = await res.json();
- 
+
       if (res.ok) {
-        messageBox.textContent = "Réservation réussie.";
-        messageBox.className = "message success";
+        showNotification("Réservation réussie !");
         form.reset();
       } else {
-        messageBox.textContent = result.error || "Erreur lors de la réservation.";
-        messageBox.className = "message error";
+        showNotification(result.error || "Erreur lors de la réservation.", "error");
       }
- 
+
     } catch (err) {
       console.error(err);
-      messageBox.textContent = "Erreur réseau ou serveur.";
-      messageBox.className = "message error";
+      showNotification("Erreur réseau ou serveur.", "error");
     }
   });
 });
+
+// ✅ Notification visuelle
+function showNotification(message, type = 'success') {
+  const container = document.getElementById('notification-container');
+  if (!container) return;
+  const notif = document.createElement('div');
+  notif.className = `notification ${type === 'error' ? 'error' : ''}`;
+  notif.textContent = message;
+  container.appendChild(notif);
+  setTimeout(() => notif.remove(), 5000);
+}

@@ -1,56 +1,39 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Accueil - M2L Réservation</title>
   <link rel="stylesheet" href="/styles.css">
-  
 </head>
 <body>
+
+  <!-- Navbar -->
   <div id="navbarContainer"></div>
 
-  <div class="hero">
+  <!-- Introduction -->
+  <header class="hero">
     <h1>Bienvenue sur M2L Réservation</h1>
-    <p>Réservez facilement vos salles de sport à la Maison des Ligues</p>
-    <img src="/medias/istockphoto-949190756-612x612.jpg" alt="Bannière multisport temporaire">
-    <a href="/reservation" class="btn-reserver">Réserver maintenant</a>
+    <p>Réservez vos créneaux sportifs à la Maison des Ligues de Lorraine</p>
+    <img src="/images/banner-temporaire.jpg" alt="Bannière multisport" class="hero-image">
+  </header>
+
+  <!-- Appel à l'action -->
+  <div class="cta-container">
+    <a href="/login" class="cta-button">Réserver maintenant</a>
   </div>
 
-  <section class="salles">
-    <div class="salle-card">
-      <img src="/images/salle-foot-temp.jpg" alt="Salle de football">
-      <h2>Football</h2>
-      <p>Terrain synthétique intérieur pour matchs et entraînements.</p>
-    </div>
-    <div class="salle-card">
-      <img src="/images/salle-basket-temp.jpg" alt="Salle de basketball">
-      <h2>Basketball</h2>
-      <p>Terrain réglementaire avec paniers ajustables et gradins.</p>
-    </div>
-    <div class="salle-card">
-      <img src="/images/salle-yoga-temp.jpg" alt="Salle de yoga">
-      <h2>Yoga</h2>
-      <p>Espace calme et lumineux pour les séances de yoga et méditation.</p>
-    </div>
-    <div class="salle-card">
-      <img src="/images/salle-muscu-temp.jpg" alt="Salle de musculation">
-      <h2>Musculation</h2>
-      <p>Appareils modernes, poids libres, bancs et haltères à disposition.</p>
-    </div>
-    <div class="salle-card">
-      <img src="/images/salle-badminton-temp.jpg" alt="Salle de badminton">
-      <h2>Badminton</h2>
-      <p>Plusieurs terrains avec marquage, filets et vestiaires dédiés.</p>
-    </div>
-  </section>
+  <!-- Notifications -->
+  <div id="notification-container"></div>
 
-  <footer>
-    <p>&copy; 2025 M2L Réservation — Tous droits réservés</p>
-    <p>Contact : m2l@ligues.fr | 03 83 00 00 00</p>
-    <p>Adresse : 12 rue du sport, Nancy</p>
-  </footer>
+  <!-- Footer -->
+  <div id="footerContainer"></div>
 
   <script src="/js/navbar.js"></script>
+  <script>
+    fetch("/partials/footer.html")
+      .then(res => res.text())
+      .then(html => document.getElementById("footerContainer").innerHTML = html);
+  </script>
 </body>
 </html>

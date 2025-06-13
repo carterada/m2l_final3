@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (!user) return;
 
   const tableBody = document.querySelector('#reservationTable tbody');
-  const messageBox = document.getElementById('messageBox');
 
   try {
     const res = await fetch('/reservation/all', {
@@ -23,22 +22,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log("Réservations reçues :", data);
 
     data.forEach(resa => {
-      const tr = document.createElement('tr');
-
-      const now = new Date();
-      const endTime = new Date(resa.end_time);
-      const isPast = endTime < now;
       const isCancelled = resa.status === 'cancelled';
-
-      // Ajouter classes CSS selon le statut
-      if (isCancelled) {
-        tr.classList.add('cancelled');
-      } else if (isPast) {
-        tr.classList.add('past');
-      } else {
-        tr.classList.add('upcoming');
-      }
-
+      const tr = document.createElement('tr');
+      if (isCancelled) tr.classList.add('resa-cancelled');
       tr.innerHTML = `
         <td>${resa.id}</td>
         <td>${resa.email}</td>
@@ -52,44 +38,33 @@ document.addEventListener('DOMContentLoaded', async () => {
             ? `<em>Annulée par ${resa.cancelled_by === 'user' ? 'l’utilisateur' : 'admin'}</em>`
             : `<button data-id="${resa.id}">Annuler</button>`}
         </td>
-
       `;
-
       tableBody.appendChild(tr);
     });
 
-    // Gestion du bouton "Annuler"
     tableBody.addEventListener('click', async (e) => {
       if (e.target.tagName === 'BUTTON') {
         const id = e.target.dataset.id;
-        if (confirm("Annuler cette réservation ?")) {
-          const delRes = await fetch(`/reservation/${id}`, {
-            method: 'DELETE',
-            credentials: 'include'
-          });
-          const result = await delRes.json();
 
-          if (delRes.ok) {
-            // Met à jour la ligne sans la supprimer
-            const row = e.target.closest('tr');
-            row.className = 'cancelled';
-            row.cells[6].textContent = 'cancelled';
-            row.cells[7].innerHTML = '<em>Annulée par admin</em>';
+        const delRes = await fetch(`/reservation/${id}`, {
+          method: 'DELETE',
+          credentials: 'include'
+        });
+        const result = await delRes.json();
 
-            messageBox.textContent = "Réservation annulée.";
-            messageBox.className = "message success";
-          } else {
-            messageBox.textContent = result.error || "Erreur lors de l'annulation.";
-            messageBox.className = "message error";
-          }
+        if (delRes.ok) {
+          e.target.closest('tr').classList.add('resa-cancelled');
+          e.target.closest('td').innerHTML = '<em>Annulée par vous</em>';
+          showNotification("Réservation annulée avec succès !");
+        } else {
+          showNotification(result.error || "Erreur lors de l'annulation.", "error");
         }
       }
     });
 
   } catch (err) {
     console.error("Erreur lors du chargement des réservations :", err);
-    messageBox.textContent = "Erreur de chargement.";
-    messageBox.className = "message error";
+    showNotification("Erreur de chargement des réservations", "error");
   }
 });
 
@@ -99,4 +74,15 @@ function formatDateTime(dateTime) {
     dateStyle: 'short',
     timeStyle: 'short'
   });
+}
+
+// ✅ Notification visuelle
+function showNotification(message, type = 'success') {
+  const container = document.getElementById('notification-container');
+  if (!container) return;
+  const notif = document.createElement('div');
+  notif.className = `notification ${type === 'error' ? 'error' : ''}`;
+  notif.textContent = message;
+  container.appendChild(notif);
+  setTimeout(() => notif.remove(), 5000);
 }
